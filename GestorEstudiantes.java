@@ -119,6 +119,48 @@ public class GestorEstudiantes
 		rs = st.executeQuery(query);
 	}
 	
+	public Grado buscarGrado(int idgrado) throws SQLException
+	{
+		
+		st = con.createStatement();
+		String query = "SELECT * FROM grado WHERE codgrado = '"+idgrado+"'";
+		rs = st.executeQuery(query);
+		
+		int codgrado = rs.getInt("codgrado");
+		String nombre = rs.getString("nombre");
+		int horas = rs.getInt("horas");
+		
+		Grado G1 = new Grado (codgrado,nombre,horas);
+		return G1;		
+	}
+	
+	public ArrayList<Grado> listaGrados() throws Exception
+	{
+		ArrayList<Grado> a = new ArrayList<Grado>();
+		st = con.createStatement();
+		String query = "SELECT * FROM grado";
+		rs = st.executeQuery(query);
+		
+		int codgrado;
+		String nombre;
+		int horas;
+		
+		while (rs.next())
+		{
+			codgrado = rs.getInt("codgrado");
+			nombre = rs.getString("nombre");
+			horas = rs.getInt("horas");
+			Grado G1 = new Grado (codgrado,nombre,horas);
+			a.add(G1);
+		}
+		return a;
+	}
+	
+	public void cerrarConexion() throws SQLException
+	{
+		con.close();
+	}
+	
 	
 	
 }
