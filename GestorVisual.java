@@ -11,6 +11,8 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestorVisual extends JFrame {
 
@@ -88,18 +90,50 @@ public class GestorVisual extends JFrame {
 		contentPane.add(comboBox);
 		
 		JButton boton_buscar = new JButton("Buscar");
+		boton_buscar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String id_string = texto_id.getText();
+				int id = Integer.valueOf(id_string);
+				Estudiante E1 = GestorEstudiantes.buscarEstudiante(id);
+				String nombre = E1.nombre;
+				
+			}
+		});
 		boton_buscar.setBounds(84, 269, 85, 23);
 		contentPane.add(boton_buscar);
 		
 		JButton boton_insertar = new JButton("Insertar");
+		boton_insertar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+			}
+		});
 		boton_insertar.setBounds(179, 269, 87, 23);
 		contentPane.add(boton_insertar);
 		
 		JButton boton_modificar = new JButton("Modificar");
+		boton_modificar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+			}
+		});
 		boton_modificar.setBounds(276, 269, 88, 23);
 		contentPane.add(boton_modificar);
 		
 		JButton boton_eliminar = new JButton("Eliminar");
+		boton_eliminar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+			}
+		});
 		boton_eliminar.setBounds(374, 269, 88, 23);
 		contentPane.add(boton_eliminar);
 		

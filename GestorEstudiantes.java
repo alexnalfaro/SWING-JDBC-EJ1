@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class GestorEstudiantes 
 {
-	Connection con;
-	Statement st;
-	ResultSet rs;
+	static Connection con;
+	static Statement st;
+	static ResultSet rs;
 	
 	
 	public GestorEstudiantes () throws SQLException
@@ -20,7 +20,7 @@ public class GestorEstudiantes
 		String url = "jdbc:mysql://localhost/JDBC1";
 		String user = "root";
 		String psswd = "root";
-		this.con = DriverManager.getConnection(url,user,psswd);
+		GestorEstudiantes.con = DriverManager.getConnection(url,user,psswd);
 	}
 	
 	public ArrayList<Estudiante> listaEstudiantes() throws Exception
@@ -51,7 +51,7 @@ public class GestorEstudiantes
 		return a;
 	}
 	
-	public Estudiante buscarEstudiante (int idestudiante) throws Exception
+	public static Estudiante buscarEstudiante (int idestudiante) throws Exception
 	{
 		st = con.createStatement();
 		String query = "SELECT * FROM estudiante WHERE id = '"+idestudiante+"'";
