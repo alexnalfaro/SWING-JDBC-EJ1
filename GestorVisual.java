@@ -107,7 +107,7 @@ public class GestorVisual extends JFrame {
 				int id = Integer.parseInt(id_string);
 				try {
 					GestorEstudiantes G1 = new GestorEstudiantes();
-					Estudiante E1 = GestorEstudiantes.buscarEstudiante(id);
+					Estudiante E1 = G1.buscarEstudiante(id);
 					label_mensaje.setText(E1.nombre);
 					G1.cerrarConexion();
 				} catch (Exception e1) {

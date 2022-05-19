@@ -11,16 +11,16 @@ import java.util.ArrayList;
 
 public class GestorEstudiantes 
 {
-	static Connection con;
-	static Statement st;
-	static ResultSet rs;
+	Connection con;
+	Statement st;
+	ResultSet rs;
 	
 	public GestorEstudiantes () throws SQLException
 	{
 		String url = "jdbc:mysql://localhost/JDBC_ALEX_EJERCICIO1";
 		String user = "root";
 		String psswd = "root";
-		GestorEstudiantes.con = DriverManager.getConnection(url,user,psswd);
+		this.con = DriverManager.getConnection(url,user,psswd);
 		System.out.println("Conectado");
 	}
 	
@@ -52,7 +52,7 @@ public class GestorEstudiantes
 		return a;
 	}
 	
-	public static Estudiante buscarEstudiante (int idestudiante) throws Exception
+	public Estudiante buscarEstudiante (int idestudiante) throws Exception
 	{
 		st = con.createStatement();
 		String query = "SELECT * FROM estudiante WHERE id = '"+idestudiante+"'";
