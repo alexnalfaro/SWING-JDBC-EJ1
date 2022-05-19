@@ -1,6 +1,5 @@
 package EJERCICIO1;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,6 +11,15 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
 public class GestorVisual extends JFrame {
@@ -22,7 +30,8 @@ public class GestorVisual extends JFrame {
 	private JTextField texto_ciudad;
 	private JTextField texto_telefono;
 	private JTextField texto_fecha;
-	String [] a = {"Administración de Sistemas Informáticos en Red","Desarrollo Web"};
+	JLabel label_mensaje;
+	String [] a = {"Administracion de Sistemas Informaticos en Red","Desarrollo Web"};
 
 	/**
 	 * Launch the application.
@@ -95,10 +104,16 @@ public class GestorVisual extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				String id_string = texto_id.getText();
-				int id = Integer.valueOf(id_string);
-				Estudiante E1 = GestorEstudiantes.buscarEstudiante(id);
-				String nombre = E1.nombre;
-				
+				int id = Integer.parseInt(id_string);
+				try {
+					GestorEstudiantes G1 = new GestorEstudiantes();
+					Estudiante E1 = GestorEstudiantes.buscarEstudiante(id);
+					label_mensaje.setText(E1.nombre);
+					G1.cerrarConexion();
+				} catch (Exception e1) {
+					// TODO Bloque catch generado automáticamente
+					e1.printStackTrace();
+				}	
 			}
 		});
 		boton_buscar.setBounds(84, 269, 85, 23);
@@ -109,7 +124,31 @@ public class GestorVisual extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				
+				try {
+					GestorEstudiantes G1 = new GestorEstudiantes();
+					String id_string = texto_id.getText();
+					String nombre_string = texto_nombre.getText();
+					String ciudad_string = texto_ciudad.getText();
+					String telefono_string = texto_telefono.getText();
+					String fecha_string = texto_fecha.getText();
+					String codgrado_string;
+					if (comboBox.getSelectedItem().equals("Administracion de Sistemas Informaticos en Red"))
+					{
+						codgrado_string = "1";
+					}
+					else
+					{
+						codgrado_string = "2";
+					}
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd",Locale.JAPAN);
+					Date fecha = formatter.parse(fecha_string);
+					int codgrado = Integer.parseInt(codgrado_string);
+					Estudiante E1 = new Estudiante (id_string,nombre_string,ciudad_string,telefono_string,fecha,codgrado);
+					G1.insertarEstudiante(E1);
+				} catch (SQLException | ParseException e1) {
+					// TODO Bloque catch generado automáticamente
+					e1.printStackTrace();
+				}
 			}
 		});
 		boton_insertar.setBounds(179, 269, 87, 23);
@@ -137,7 +176,7 @@ public class GestorVisual extends JFrame {
 		boton_eliminar.setBounds(374, 269, 88, 23);
 		contentPane.add(boton_eliminar);
 		
-		JLabel label_mensaje = new JLabel("");
+		label_mensaje = new JLabel("");
 		label_mensaje.setBounds(99, 303, 308, 35);
 		contentPane.add(label_mensaje);
 		

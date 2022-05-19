@@ -1,7 +1,8 @@
 package EJERCICIO1;
 
 import java.sql.Connection;
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,13 +15,13 @@ public class GestorEstudiantes
 	static Statement st;
 	static ResultSet rs;
 	
-	
 	public GestorEstudiantes () throws SQLException
 	{
-		String url = "jdbc:mysql://localhost/JDBC1";
+		String url = "jdbc:mysql://localhost/JDBC_ALEX_EJERCICIO1";
 		String user = "root";
 		String psswd = "root";
 		GestorEstudiantes.con = DriverManager.getConnection(url,user,psswd);
+		System.out.println("Conectado");
 	}
 	
 	public ArrayList<Estudiante> listaEstudiantes() throws Exception
@@ -161,6 +162,9 @@ public class GestorEstudiantes
 		con.close();
 	}
 	
-	
+	public static void main (String [] args) throws SQLException
+	{
+		GestorEstudiantes G1 = new GestorEstudiantes();
+	}
 	
 }
