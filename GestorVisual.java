@@ -111,7 +111,7 @@ public class GestorVisual extends JFrame {
 					label_mensaje.setText(E1.nombre);
 					G1.cerrarConexion();
 				} catch (Exception e1) {
-					// TODO Bloque catch generado automáticamente
+					// TODO Bloque catch generado automaticamente
 					e1.printStackTrace();
 				}	
 			}
@@ -146,7 +146,7 @@ public class GestorVisual extends JFrame {
 					Estudiante E1 = new Estudiante (id_string,nombre_string,ciudad_string,telefono_string,fecha,codgrado);
 					G1.insertarEstudiante(E1);
 				} catch (SQLException | ParseException e1) {
-					// TODO Bloque catch generado automáticamente
+					// TODO Bloque catch generado automaticamente
 					e1.printStackTrace();
 				}
 			}
@@ -190,7 +190,7 @@ public class GestorVisual extends JFrame {
 //						label_mensaje.setText("No se ha podido modificar el alumno");
 //					}
 				} catch (SQLException | ParseException e1) {
-					// TODO Bloque catch generado automáticamente
+					// TODO Bloque catch generado automaticamente
 					e1.printStackTrace();
 				}
 				
@@ -204,7 +204,16 @@ public class GestorVisual extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				
+				try {
+					GestorEstudiantes G1 = new GestorEstudiantes();
+					String id_string = texto_id.getText();
+					int id = Integer.parseInt(id_string);
+					G1.borrarEstudiante(id);
+				} catch (SQLException e1) {
+					// TODO Bloque catch generado automaticamente
+					e1.printStackTrace();
+				}
+
 			}
 		});
 		boton_eliminar.setBounds(374, 269, 88, 23);
