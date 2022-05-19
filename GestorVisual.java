@@ -159,6 +159,40 @@ public class GestorVisual extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				try {
+					GestorEstudiantes G1 = new GestorEstudiantes();
+					String id_string = texto_id.getText();
+					int id = Integer.parseInt(id_string);
+					String nombre_string = texto_nombre.getText();
+					String ciudad_string = texto_ciudad.getText();
+					String telefono_string = texto_telefono.getText();
+					String fecha_string = texto_fecha.getText();
+					String codgrado_string;
+					if (comboBox.getSelectedItem().equals("Administracion de Sistemas Informaticos en Red"))
+					{
+						codgrado_string = "1";
+					}
+					else
+					{
+						codgrado_string = "2";
+					}
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd",Locale.JAPAN);
+					Date fecha = formatter.parse(fecha_string);
+					int codgrado = Integer.parseInt(codgrado_string);
+					Estudiante E1 = new Estudiante (id_string,nombre_string,ciudad_string,telefono_string,fecha,codgrado);
+					G1.modificarEstudiante(id, E1);
+//					if (G1.modificarEstudiante(id, E1))
+//					{
+//						label_mensaje.setText("Alumno modificado");
+//					}
+//					else
+//					{
+//						label_mensaje.setText("No se ha podido modificar el alumno");
+//					}
+				} catch (SQLException | ParseException e1) {
+					// TODO Bloque catch generado automáticamente
+					e1.printStackTrace();
+				}
 				
 			}
 		});
