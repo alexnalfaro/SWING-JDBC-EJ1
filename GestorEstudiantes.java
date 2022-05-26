@@ -1,9 +1,10 @@
 package EJERCICIO1;
 
+
 import java.sql.Connection;
-//import java.sql.Date;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,13 +16,9 @@ public class GestorEstudiantes
 	Statement st;
 	ResultSet rs;
 	
-	public GestorEstudiantes () throws SQLException
+	public GestorEstudiantes () 
 	{
-		String url = "jdbc:mysql://localhost/JDBC_ALEX_EJERCICIO1";
-		String user = "root";
-		String psswd = "root";
-		this.con = DriverManager.getConnection(url,user,psswd);
-		System.out.println("Conectado");
+		
 	}
 	
 	public ArrayList<Estudiante> listaEstudiantes() throws Exception
@@ -52,114 +49,100 @@ public class GestorEstudiantes
 		return a;
 	}
 	
-	public Estudiante buscarEstudiante (String idestudiante) throws Exception
+	public Estudiante buscarEstudiante (String idestudiante)
 	{
-		st = con.createStatement();
-		String query = "SELECT * FROM estudiante WHERE id = '"+idestudiante+"'";
-		rs = st.executeQuery(query);
-		String id;
-		String nombre;
-		String ciudad;
-		String telefono;
-		String fechanacimiento;
-		int codgrado;
-		
-		id = rs.getString("id");
-		nombre = rs.getString("nombre");
-		ciudad = rs.getString("ciudad");
-		telefono = rs.getString("telefono");
-		fechanacimiento = rs.getString("fecha");
-		codgrado = rs.getInt("codgrado");
-		Estudiante E1 = new Estudiante (id,nombre,ciudad,telefono,fechanacimiento,codgrado);
-		
-		return E1;
-	}
-	
-	public void borrarEstudiante(String idestudiante) throws SQLException
-	{
-		st = con.createStatement();
-		String query = "SELECT * FROM estudiante WHERE id = '"+idestudiante+"'";
-		rs = st.executeQuery(query);
-		if (rs != null)
-		{
+		String url = "jdbc:mysql://localhost/ejercicio1";
+		String user = "root";
+		String psswd = "root";
+		try {
+			con = DriverManager.getConnection(url,user,psswd);
+			System.out.println("Conectado");
 			st = con.createStatement();
-			String query2 = "DELETE FROM estudiante WHERE id = '"+idestudiante+"'";
-			rs = st.executeQuery(query2);
+			String query = "SELECT * FROM estudiante WHERE id='"+idestudiante+"';";
+			rs = st.executeQuery(query);
+			String id = "";
+			String nombre = "";
+			String ciudad = "";
+			String telefono = "";
+			String fechanacimiento = "";
+			int codgrado = 0;	
+			while (rs.next())
+			{
+				id = rs.getString("id");
+				nombre = rs.getString("nombre");
+				ciudad = rs.getString("ciudad");
+				telefono = rs.getString("telefono");
+				fechanacimiento = rs.getString("fechanacimiento");
+				codgrado = rs.getInt("codgrado");
+			}
+			Estudiante E1 = new Estudiante (id,nombre,ciudad,telefono,fechanacimiento,codgrado);
+			con.close();
+			return E1;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		else
-		{
-			System.err.print("No existe el alumno");
+		return null;
+	}
+	
+	public void borrarEstudiante(String idestudiante)
+	{
+		String url = "jdbc:mysql://localhost/ejercicio1";
+		String user = "root";
+		String psswd = "root";
+		try {
+			Connection con = DriverManager.getConnection(url,user,psswd);
+			String query = "DELETE FROM estudiante where id='"+idestudiante+"';";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.execute();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	
-	public void insertarEstudiante (Estudiante E1) throws SQLException
+	public void insertarEstudiante (Estudiante E1)
 	{
-		String id = E1.id;
-		String nombre = E1.nombre;
-		String ciudad = E1.ciudad;
-		String telefono = E1.telefono;
-		String fechanacimiento = E1.fechanacimiento;
-		int codgrado = E1.codgrado;
-		
-		st = con.createStatement();
-		String query = "INSERT INTO estudiante VALUES ('"+id+"','"+nombre+"','"+ciudad+"','"+telefono+"','"+fechanacimiento+"','"+codgrado+"')";
-		rs = st.executeQuery(query);
-	}
-	
-	public void modificarEstudiante (int idestudiante, Estudiante E1) throws SQLException
-	{
-		String id = E1.id;
-		String nombre = E1.nombre;
-		String ciudad = E1.ciudad;
-		String telefono = E1.telefono;
-		String fechanacimiento = E1.fechanacimiento;
-		int codgrado = E1.codgrado;
-		
-		st = con.createStatement();
-		String query = "UPDATE students SET id = '"+id+"', nombre = '"+nombre+"', ciudad = '"+ciudad+"', telefono = '"+telefono+"', fechanacimiento = '"+fechanacimiento+"', codgrado = '"+codgrado+"' WHERE id = '"+idestudiante+"'";
-		rs = st.executeQuery(query);
-	}
-	
-	public Grado buscarGrado(int idgrado) throws SQLException
-	{
-		
-		st = con.createStatement();
-		String query = "SELECT * FROM grado WHERE codgrado = '"+idgrado+"'";
-		rs = st.executeQuery(query);
-		
-		int codgrado = rs.getInt("codgrado");
-		String nombre = rs.getString("nombre");
-		int horas = rs.getInt("horas");
-		
-		Grado G1 = new Grado (codgrado,nombre,horas);
-		return G1;		
-	}
-	
-	public ArrayList<Grado> listaGrados() throws Exception
-	{
-		ArrayList<Grado> a = new ArrayList<Grado>();
-		st = con.createStatement();
-		String query = "SELECT * FROM grado";
-		rs = st.executeQuery(query);
-		
-		int codgrado;
-		String nombre;
-		int horas;
-		
-		while (rs.next())
-		{
-			codgrado = rs.getInt("codgrado");
-			nombre = rs.getString("nombre");
-			horas = rs.getInt("horas");
-			Grado G1 = new Grado (codgrado,nombre,horas);
-			a.add(G1);
+		String url = "jdbc:mysql://localhost/ejercicio1";
+		String user = "root";
+		String password = "root";
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			String id = E1.getId();
+			String nombre = E1.getNombre();
+			String ciudad = E1.getCiudad();
+			String telefono = E1.getTelefono();
+			String fecha = E1.getFecha();
+			int cod = E1.getCodgrado();
+			String query = "INSERT INTO estudiante VALUES ('"+id+"','"+nombre+"','"+ciudad+"','"+telefono+"','"+fecha+"','"+cod+"');";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.execute();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return a;
+		
 	}
 	
-	public void cerrarConexion() throws SQLException
+	public void modificarEstudiante (String idestudiante, Estudiante E1)
 	{
-		con.close();
+		String url = "jdbc:mysql://localhost/ejercicio1";
+		String user = "root";
+		String password = "root";
+		try {
+			con = DriverManager.getConnection(url,user,password);
+			String nombre = E1.getNombre();
+			String ciudad = E1.getCiudad();
+			String telefono = E1.getTelefono();
+			String fecha = E1.getFecha();
+			int cod = E1.getCodgrado();
+			String query = "UPDATE estudiante SET nombre = '"+nombre+"', ciudad = '"+ciudad+"', telefono = '"+telefono+"', fechanacimiento = '"+fecha+"', codgrado = '"+cod+"' WHERE id = '"+idestudiante+"';";		
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.execute();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main (String [] args) throws SQLException
