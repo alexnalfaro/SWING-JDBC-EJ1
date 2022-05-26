@@ -49,7 +49,7 @@ public class GestorVisual extends JFrame {
 		});
 	}
 
-	/**
+	 /**
 	 * Create the frame.
 	 */
 	public GestorVisual() {
@@ -103,17 +103,20 @@ public class GestorVisual extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				String id_string = texto_id.getText();
-				int id = Integer.parseInt(id_string);
 				try {
-					GestorEstudiantes G1 = new GestorEstudiantes();
-					Estudiante E1 = G1.buscarEstudiante(id);
-					label_mensaje.setText(E1.nombre);
-					G1.cerrarConexion();
+					GestorEstudiantes G1 = new GestorEstudiantes ();
+					Estudiante E1 = G1.buscarEstudiante(texto_id.getText());
+					texto_nombre.setText(E1.nombre);
+					texto_ciudad.setText(E1.ciudad);
+					texto_fecha.setText(E1.fechanacimiento);
+					texto_telefono.setText(E1.telefono);
+					comboBox.setSelectedItem(E1.codgrado);
+					
 				} catch (Exception e1) {
-					// TODO Bloque catch generado automaticamente
+					// TODO Bloque catch generado automáticamente
 					e1.printStackTrace();
-				}	
+				}
+				
 			}
 		});
 		boton_buscar.setBounds(84, 269, 85, 23);
@@ -140,13 +143,11 @@ public class GestorVisual extends JFrame {
 					{
 						codgrado_string = "2";
 					}
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd",Locale.JAPAN);
-					Date fecha = formatter.parse(fecha_string);
 					int codgrado = Integer.parseInt(codgrado_string);
-					Estudiante E1 = new Estudiante (id_string,nombre_string,ciudad_string,telefono_string,fecha,codgrado);
+					Estudiante E1 = new Estudiante (id_string,nombre_string,ciudad_string,telefono_string,fecha_string,codgrado);
 					G1.insertarEstudiante(E1);
-				} catch (SQLException | ParseException e1) {
-					// TODO Bloque catch generado automaticamente
+				} catch (SQLException e1) {
+					// TODO Bloque catch generado automáticamente
 					e1.printStackTrace();
 				}
 			}
@@ -176,10 +177,8 @@ public class GestorVisual extends JFrame {
 					{
 						codgrado_string = "2";
 					}
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd",Locale.JAPAN);
-					Date fecha = formatter.parse(fecha_string);
 					int codgrado = Integer.parseInt(codgrado_string);
-					Estudiante E1 = new Estudiante (id_string,nombre_string,ciudad_string,telefono_string,fecha,codgrado);
+					Estudiante E1 = new Estudiante (id_string,nombre_string,ciudad_string,telefono_string,fecha_string,codgrado);
 					G1.modificarEstudiante(id, E1);
 //					if (G1.modificarEstudiante(id, E1))
 //					{
@@ -189,8 +188,8 @@ public class GestorVisual extends JFrame {
 //					{
 //						label_mensaje.setText("No se ha podido modificar el alumno");
 //					}
-				} catch (SQLException | ParseException e1) {
-					// TODO Bloque catch generado automaticamente
+				} catch (SQLException e1) {
+					// TODO Bloque catch generado automáticamente
 					e1.printStackTrace();
 				}
 				
@@ -204,16 +203,7 @@ public class GestorVisual extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				try {
-					GestorEstudiantes G1 = new GestorEstudiantes();
-					String id_string = texto_id.getText();
-					int id = Integer.parseInt(id_string);
-					G1.borrarEstudiante(id);
-				} catch (SQLException e1) {
-					// TODO Bloque catch generado automaticamente
-					e1.printStackTrace();
-				}
-
+				
 			}
 		});
 		boton_eliminar.setBounds(374, 269, 88, 23);

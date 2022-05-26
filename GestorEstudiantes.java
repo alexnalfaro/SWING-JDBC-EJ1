@@ -35,7 +35,7 @@ public class GestorEstudiantes
 		String nombre;
 		String ciudad;
 		String telefono;
-		Date fechanacimiento;
+		String fechanacimiento;
 		int codgrado;
 		
 		while (rs.next())
@@ -44,7 +44,7 @@ public class GestorEstudiantes
 			nombre = rs.getString("nombre");
 			ciudad = rs.getString("ciudad");
 			telefono = rs.getString("telefono");
-			fechanacimiento = rs.getDate("fecha");
+			fechanacimiento = rs.getString("fecha");
 			codgrado = rs.getInt("codgrado");
 			Estudiante E1 = new Estudiante (id,nombre,ciudad,telefono,fechanacimiento,codgrado);
 			a.add(E1);
@@ -52,7 +52,7 @@ public class GestorEstudiantes
 		return a;
 	}
 	
-	public Estudiante buscarEstudiante (int idestudiante) throws Exception
+	public Estudiante buscarEstudiante (String idestudiante) throws Exception
 	{
 		st = con.createStatement();
 		String query = "SELECT * FROM estudiante WHERE id = '"+idestudiante+"'";
@@ -61,21 +61,21 @@ public class GestorEstudiantes
 		String nombre;
 		String ciudad;
 		String telefono;
-		Date fechanacimiento;
+		String fechanacimiento;
 		int codgrado;
 		
 		id = rs.getString("id");
 		nombre = rs.getString("nombre");
 		ciudad = rs.getString("ciudad");
 		telefono = rs.getString("telefono");
-		fechanacimiento = rs.getDate("fecha");
+		fechanacimiento = rs.getString("fecha");
 		codgrado = rs.getInt("codgrado");
 		Estudiante E1 = new Estudiante (id,nombre,ciudad,telefono,fechanacimiento,codgrado);
 		
 		return E1;
 	}
 	
-	public void borrarEstudiante(int idestudiante) throws SQLException
+	public void borrarEstudiante(String idestudiante) throws SQLException
 	{
 		st = con.createStatement();
 		String query = "SELECT * FROM estudiante WHERE id = '"+idestudiante+"'";
@@ -98,7 +98,7 @@ public class GestorEstudiantes
 		String nombre = E1.nombre;
 		String ciudad = E1.ciudad;
 		String telefono = E1.telefono;
-		Date fechanacimiento = E1.fechanacimiento;
+		String fechanacimiento = E1.fechanacimiento;
 		int codgrado = E1.codgrado;
 		
 		st = con.createStatement();
@@ -112,7 +112,7 @@ public class GestorEstudiantes
 		String nombre = E1.nombre;
 		String ciudad = E1.ciudad;
 		String telefono = E1.telefono;
-		Date fechanacimiento = E1.fechanacimiento;
+		String fechanacimiento = E1.fechanacimiento;
 		int codgrado = E1.codgrado;
 		
 		st = con.createStatement();
